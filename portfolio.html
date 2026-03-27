@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>William Nyongesa — Python & AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #16161f;
+    --accent: #00ff9d;
+    --accent2: #7c6aff;
+    --accent3: #ff6b6b;
+    --text: #e8e8f0;
+    --text2: #8888a0;
+    --border: rgba(255,255,255,0.07);
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text2);
+    text-decoration: none;
+    font-family: var(--mono);
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,157,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,157,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,255,157,0.06) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; max-width: 800px; }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .accent-text { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--text2);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.75rem 1.75rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-weight: 700;
+  }
+
+  .btn-primary:hover {
+    background: #00cc7d;
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin-bottom: 3rem;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--text2);
+    margin-bottom: 1rem;
+    font-size: 15px;
+  }
+
+  .about-text p strong { color: var(--text); }
+
+  .about-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .fact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .fact-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(0,255,157,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .fact-label {
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .fact-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--bg2); max-width: 100%; padding: 6rem 4rem; }
+  .skills-inner { max-width: 1100px; margin: 0 auto; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .skill-card:hover { border-color: rgba(0,255,157,0.3); }
+
+  .skill-card-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text2);
+    border: 1px solid var(--border);
+    font-family: var(--mono);
+  }
+
+  .tag.highlight {
+    background: rgba(0,255,157,0.08);
+    color: var(--accent);
+    border-color: rgba(0,255,157,0.2);
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-card:hover { border-color: rgba(0,255,157,0.2); transform: translateY(-2px); }
+
+  .project-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+
+  .project-desc {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .stack-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: rgba(124,106,255,0.1);
+    color: #9d8eff;
+    border: 1px solid rgba(124,106,255,0.2);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-date {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text2);
+    padding-top: 4px;
+  }
+
+  .exp-role {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .exp-company {
+    font-size: 14px;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    font-family: var(--mono);
+  }
+
+  .exp-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--bg2); max-width: 100%; padding: 6rem 4rem; }
+  .contact-inner { max-width: 1100px; margin: 0 auto; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-text {
+    font-size: 15px;
+    color: var(--text2);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: rgba(0,255,157,0.3);
+    transform: translateX(4px);
+  }
+
+  .contact-link-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(0,255,157,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .contact-link-label {
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .contact-link-value {
+    font-size: 14px;
+    color: var(--text);
+    font-family: var(--mono);
+  }
+
+  .availability {
+    padding: 1.5rem;
+    background: rgba(0,255,157,0.05);
+    border: 1px solid rgba(0,255,157,0.15);
+    border-radius: 12px;
+  }
+
+  .avail-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 8px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .avail-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+  }
+
+  .avail-text {
+    font-size: 14px;
+    color: var(--text2);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    #skills, #contact { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">WN.DEV</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">AVAILABLE FOR OPPORTUNITIES</div>
+    <h1>William<br><span class="accent-text">Nyongesa</span></h1>
+    <p class="hero-desc">
+      Python Developer & AI Engineer based in Nairobi, Kenya.
+      I build intelligent systems — from RAG pipelines and LLM applications
+      to ERP customizations and full stack web apps.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">13</div>
+        <div class="stat-label">Skills Verified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-tag">// ABOUT ME</div>
+  <h2 class="section-title">Building things that matter</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>Python developer and AI engineer</strong> from Nairobi with a BSc in Information Technology from Machakos University and additional training from Moringa School.</p>
+      <p>My passion is building systems that solve real problems — from <strong>RAG pipelines</strong> that make AI grounded and accurate, to <strong>custom Odoo ERP addons</strong> that automate business workflows, to full-stack web applications.</p>
+      <p>I believe programming is not just a job — it's a craft. I'm obsessed with clean code, good architecture, and systems that actually work in production.</p>
+      <p>Currently exploring opportunities where I can apply my Python and AI skills to build meaningful products across Africa and beyond.</p>
+    </div>
+    <div class="about-facts">
+      <div class="fact-item">
+        <div class="fact-icon">📍</div>
+        <div>
+          <div class="fact-label">Location</div>
+          <div class="fact-value">Nairobi, Kenya</div>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-icon">🎓</div>
+        <div>
+          <div class="fact-label">Education</div>
+          <div class="fact-value">BSc IT — Machakos University</div>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-icon">💼</div>
+        <div>
+          <div class="fact-label">Experience</div>
+          <div class="fact-value">Software Developer — AKTED Solutions</div>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-icon">🤖</div>
+        <div>
+          <div class="fact-label">Specialization</div>
+          <div class="fact-value">RAG Systems, Python, Odoo ERP</div>
+        </div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-icon">🌍</div>
+        <div>
+          <div class="fact-label">Interests</div>
+          <div class="fact-value">AI for African development challenges</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="skills-inner">
+    <div class="section-tag">// SKILLS</div>
+    <h2 class="section-title">What I work with</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-title">AI & Machine Learning</div>
+        <div class="skill-tags">
+          <span class="tag highlight">RAG Systems</span>
+          <span class="tag highlight">LLMs</span>
+          <span class="tag highlight">ChromaDB</span>
+          <span class="tag">Vector Databases</span>
+          <span class="tag">Prompt Engineering</span>
+          <span class="tag">Document Embedding</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Languages</div>
+        <div class="skill-tags">
+          <span class="tag highlight">Python</span>
+          <span class="tag highlight">SQL</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Java</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Backend & Frameworks</div>
+        <div class="skill-tags">
+          <span class="tag highlight">Flask</span>
+          <span class="tag highlight">REST APIs</span>
+          <span class="tag">Swagger</span>
+          <span class="tag">OOP</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">MongoDB</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">ERP Development</div>
+        <div class="skill-tags">
+          <span class="tag highlight">Odoo 17</span>
+          <span class="tag highlight">Custom Addons</span>
+          <span class="tag">ORM</span>
+          <span class="tag">XML Views</span>
+          <span class="tag">Business Logic</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">Frontend</div>
+        <div class="skill-tags">
+          <span class="tag">React</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">DevOps & Tools</div>
+        <div class="skill-tags">
+          <span class="tag highlight">Linux (Ubuntu)</span>
+          <span class="tag highlight">Git</span>
+          <span class="tag">Docker</span>
+          <span class="tag">CI/CD</span>
+          <span class="tag">Postman</span>
+          <span class="tag">Exploratory Testing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-tag">// PROJECTS</div>
+  <h2 class="section-title">Things I've built</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-num">01 — FEATURED</div>
+      <div class="project-title">RAG System — AI Document Intelligence</div>
+      <p class="project-desc">
+        End-to-end Retrieval Augmented Generation pipeline built from scratch.
+        Ingests documents, chunks and embeds them into ChromaDB, retrieves
+        semantically relevant context, and generates grounded LLM responses
+        with minimal hallucination.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">ChromaDB</span>
+        <span class="stack-tag">LLM APIs</span>
+        <span class="stack-tag">Vector Search</span>
+        <span class="stack-tag">Cosine Similarity</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02 — ERP</div>
+      <div class="project-title">Odoo 17 — School Library Management</div>
+      <p class="project-desc">
+        Production-grade custom Odoo 17 addon for school library management.
+        Built Python models with relational fields, XML views, computed fields,
+        validation constraints using @api.constrains, and role-based access control.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Odoo 17</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">XML</span>
+        <span class="stack-tag">ORM</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03 — WEB APP</div>
+      <div class="project-title">Bus Booking System</div>
+      <p class="project-desc">
+        Full-stack bus booking platform with user authentication, seat selection,
+        and booking management. Flask backend with REST APIs, normalized
+        PostgreSQL schema, and exploratory testing across all user flows.
+      </p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Flask</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">REST APIs</span>
+        <span class="stack-tag">Linux</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-tag">// EXPERIENCE</div>
+  <h2 class="section-title">Where I've worked</h2>
+
+  <div class="exp-item">
+    <div class="exp-date">2024 — 2025</div>
+    <div>
+      <div class="exp-role">Software Developer</div>
+      <div class="exp-company">AKTED Solutions</div>
+      <div class="exp-desc">
+        Built and maintained Python-based backend systems and REST APIs for client-facing web applications.
+        Designed PostgreSQL database schemas, documented APIs using Swagger, and deployed on Linux environments.
+        Worked across the full stack using Python, JavaScript, and PostgreSQL in an agile team environment.
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">2023 — 2024</div>
+    <div>
+      <div class="exp-role">Software Engineering Student</div>
+      <div class="exp-company">Moringa School, Nairobi</div>
+      <div class="exp-desc">
+        Intensive full-stack software engineering bootcamp covering Python, JavaScript, React, SQL, APIs, Git, and Linux fundamentals.
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">2018 — 2023</div>
+    <div>
+      <div class="exp-role">BSc Information Technology</div>
+      <div class="exp-company">Machakos University</div>
+      <div class="exp-desc">
+        Core CS curriculum covering algorithms, data structures, databases, networking, operating systems, and software engineering principles.
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="contact-inner">
+    <div class="section-tag">// CONTACT</div>
+    <h2 class="section-title">Let's work together</h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-text">
+          I'm currently open to new opportunities — full-time roles, fellowships,
+          and freelance projects. If you're building something interesting or
+          need a Python/AI engineer, I'd love to hear from you.
+        </p>
+        <div class="availability">
+          <div class="avail-title"><span class="avail-dot"></span>AVAILABLE FOR WORK</div>
+          <div class="avail-text">Open to full-time roles, fellowships, and freelance projects in Python, AI, and ERP development.</div>
+        </div>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:marakawilliam@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉</div>
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-value">marakawilliam@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/william-nyongesa-a2a064241" target="_blank" class="contact-link">
+          <div class="contact-link-icon">in</div>
+          <div>
+            <div class="contact-link-label">LinkedIn</div>
+            <div class="contact-link-value">william-nyongesa</div>
+          </div>
+        </a>
+        <a href="https://github.com/williamNyongesa" target="_blank" class="contact-link">
+          <div class="contact-link-icon">gh</div>
+          <div>
+            <div class="contact-link-label">GitHub</div>
+            <div class="contact-link-value">williamNyongesa</div>
+          </div>
+        </a>
+        <a href="tel:+254715734757" class="contact-link">
+          <div class="contact-link-icon">☎</div>
+          <div>
+            <div class="contact-link-label">Phone</div>
+            <div class="contact-link-value">+254 715 734 757</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 William Nyongesa — Built with passion in Nairobi 🇰🇪</p>
+  <p>Python · AI · Odoo · Full Stack</p>
+</footer>
+
+</body>
+</html>
